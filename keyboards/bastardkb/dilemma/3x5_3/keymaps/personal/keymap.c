@@ -10,9 +10,6 @@ enum dilemma_keymap_layers {
     LAYER_SYMBOLS,
 };
 
-// Automatically enable sniping-mode on the pointer layer.
-// #define DILEMMA_AUTO_SNIPING_ON_LAYER LAYER_POINTER
-
 #define ESC_MED LT(LAYER_MEDIA, KC_ESC)
 #define SPC_NAV LT(LAYER_NAVIGATION, KC_SPC)
 #define TAB_FUN LT(LAYER_FUNCTION, KC_TAB)
@@ -28,8 +25,9 @@ enum dilemma_keymap_layers {
 #    define SNIPING KC_NO
 #endif // !POINTING_DEVICE_ENABLE
 
-#define ENCODER_DIRECTION_FLIP
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+// Automatically enable sniping-mode on the pointer layer.
+// #define DILEMMA_AUTO_SNIPING_ON_LAYER LAYER_POINTER
 
 // clang-format off
 /** \brief QWERTY layout (3 rows, 10 columns). */
