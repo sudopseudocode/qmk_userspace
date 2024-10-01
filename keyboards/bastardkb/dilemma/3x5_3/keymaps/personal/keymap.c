@@ -30,6 +30,15 @@ enum dilemma_keymap_layers {
 // #define DILEMMA_AUTO_SNIPING_ON_LAYER LAYER_POINTER
 
 // clang-format off
+
+/** Key combinations */
+const uint16_t PROGMEM jk_escape_combo[] = {RSFT_T(KC_J), RCTL_T(KC_K), COMBO_END};
+const uint16_t PROGMEM caps_word_combo[] = {LSFT_T(KC_F), RSFT_T(KC_J), COMBO_END};
+combo_t key_combos[] = {
+    COMBO(jk_escape_combo, KC_ESC),
+    COMBO(caps_word_combo, QK_CAPS_WORD_TOGGLE)
+}
+
 /** \brief QWERTY layout (3 rows, 10 columns). */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_BASE] = LAYOUT_split_3x5_3(
