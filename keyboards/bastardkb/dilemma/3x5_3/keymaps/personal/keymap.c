@@ -29,6 +29,7 @@ enum dilemma_keymap_layers {
 #endif // !POINTING_DEVICE_ENABLE
 
 #define ENCODER_DIRECTION_FLIP
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
 // clang-format off
 /** \brief QWERTY layout (3 rows, 10 columns). */
