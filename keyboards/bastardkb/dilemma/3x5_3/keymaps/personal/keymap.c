@@ -25,17 +25,16 @@ enum dilemma_keymap_layers {
 #    define SNIPING KC_NO
 #endif // !POINTING_DEVICE_ENABLE
 
-#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 // Automatically enable sniping-mode on the pointer layer.
 // #define DILEMMA_AUTO_SNIPING_ON_LAYER LAYER_POINTER
 
 // clang-format off
 /** Key combinations */
 const uint16_t PROGMEM jk_escape_combo[] = {RSFT_T(KC_J), RCTL_T(KC_K), COMBO_END};
-const uint16_t PROGMEM caps_word_combo[] = {LSFT_T(KC_F), RSFT_T(KC_J), COMBO_END};
+// const uint16_t PROGMEM caps_word_combo[] = {LSFT_T(KC_F), RSFT_T(KC_J), COMBO_END};
 combo_t key_combos[] = {
     COMBO(jk_escape_combo, KC_ESC),
-    COMBO(caps_word_combo, QK_CAPS_WORD_TOGGLE),
+    // COMBO(caps_word_combo, QK_CAPS_WORD_TOGGLE),
 };
 
 /** \brief QWERTY layout (3 rows, 10 columns). */
