@@ -129,7 +129,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                       KC_LPRN, KC_UNDS, KC_RPRN, _______, XXXXXXX, XXXXXXX
   ),
 };
-// clang-format on
 
 #ifdef POINTING_DEVICE_ENABLE
 #    ifdef DILEMMA_AUTO_SNIPING_ON_LAYER
@@ -141,7 +140,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #endif     // POINTING_DEVICE_ENABLE
 
 #ifdef ENCODER_MAP_ENABLE
-// clang-format off
+
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [LAYER_BASE]       = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
     [LAYER_FUNCTION]   = {ENCODER_CCW_CW(KC_F14, KC_F15), ENCODER_CCW_CW(KC_F14, KC_F15)},
