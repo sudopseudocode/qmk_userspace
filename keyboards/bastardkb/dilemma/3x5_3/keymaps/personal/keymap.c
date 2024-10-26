@@ -29,6 +29,47 @@ enum dilemma_keymap_layers {
 // #define DILEMMA_AUTO_SNIPING_ON_LAYER LAYER_POINTER
 
 // clang-format off
+
+/** Disable mod-type while typing quickly
+ * (Similar to ZMK's "require-prior-idle-ms")
+ * Solution taken from this thread:
+ * https://github.com/qmk/qmk_firmware/issues/24262#issuecomment-2301722637
+ */
+// Decision macro for mod-tap keys to override
+#define IS_HOMEROW_MOD_TAP(kc) (              \
+    IS_QK_MOD_TAP(kc)                      && \
+    QK_MOD_TAP_GET_TAP_KEYCODE(kc) >= KC_A && \
+    QK_MOD_TAP_GET_TAP_KEYCODE(kc) <= KC_Z    )
+
+// Decision macro for preceding trigger key and typing interval
+#define IS_TYPING(k) ( \
+    ((uint8_t)(k) <= KC_Z || (uint8_t)(k) == KC_SPC) && \
+    (last_input_activity_elapsed() < QUICK_TAP_TERM)    )
+
+bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
+    static bool     is_pressed[UINT8_MAX];
+    static uint16_t prev_keycode;
+    const  uint16_t tap_keycode = QK_MOD_TAP_GET_TAP_KEYCODE(keycode);
+
+    if (record->event.pressed) {
+        // Press the tap keycode if the tap-hold key follows the previous key swiftly
+        if (IS_HOMEROW_MOD_TAP(keycode) && IS_TYPING(prev_keycode)) {
+            is_pressed[tap_keycode] = true;
+            record->keycode = tap_keycode;
+        }
+        // Cache the keycode for subsequent tap decision
+        prev_keycode = keycode;
+    }
+
+    // Release the tap keycode if pressed
+    else if (is_pressed[tap_keycode]) {
+        is_pressed[tap_keycode] = false;
+        record->keycode = tap_keycode;
+    }
+
+    return true;
+}
+
 /** Key combinations */
 const uint16_t PROGMEM jk_escape_combo[] = {RSFT_T(KC_J), RCTL_T(KC_K), COMBO_END};
 const uint16_t PROGMEM jk_mod_override_combo[] = {RSFT_T(KC_J), RCTL_T(KC_K), RALT_T(KC_L), COMBO_END};
