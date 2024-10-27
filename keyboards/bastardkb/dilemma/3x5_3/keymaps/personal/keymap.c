@@ -35,16 +35,38 @@ enum dilemma_keymap_layers {
  * Solution taken from this thread:
  * https://github.com/qmk/qmk_firmware/issues/24262#issuecomment-2301722637
  */
-// Decision macro for mod-tap keys to override
-#define IS_HOMEROW_MOD_TAP(kc) (              \
-    IS_QK_MOD_TAP(kc)                      && \
-    QK_MOD_TAP_GET_TAP_KEYCODE(kc) >= KC_A && \
-    QK_MOD_TAP_GET_TAP_KEYCODE(kc) <= KC_Z    )
 
-// Decision macro for preceding trigger key and typing interval
 #define IS_TYPING(k) ( \
     ((uint8_t)(k) <= KC_Z || (uint8_t)(k) == KC_SPC) && \
     (last_input_activity_elapsed() < QUICK_TAP_TERM)    )
+
+#define IS_LEFT_SIDE(k) ( \
+(uint8_t)(k) == KC_Q || \
+(uint8_t)(k) == KC_W || \
+(uint8_t)(k) == KC_E || \
+(uint8_t)(k) == KC_R || \
+(uint8_t)(k) == KC_T || \
+(uint8_t)(k) == KC_A || \
+(uint8_t)(k) == KC_S || \
+(uint8_t)(k) == KC_D || \
+(uint8_t)(k) == KC_F || \
+(uint8_t)(k) == KC_G || \
+(uint8_t)(k) == KC_Z || \
+(uint8_t)(k) == KC_X || \
+(uint8_t)(k) == KC_C || \
+(uint8_t)(k) == KC_V || \
+(uint8_t)(k) == KC_B || \
+(uint8_t)(k) == KC_TAB || \
+(uint8_t)(k) == KC_SPC )
+
+#define SHOULD_BYPASS_MOD_TAP(kc, prev_kc) (     \
+    IS_TYPING(prev_kc)                        && \
+    IS_QK_MOD_TAP(k)                          && \
+    (uint8_t)(k) != KC_F                      && \
+    (uint8_t)(k) != KC_J                      && \
+    (uint8_t)(k) >= KC_A                      && \
+    (uint8_t)(k) <= KC_Z )                    && \
+    !IS_QK_MOD_TAP(prev_kc)                )
 
 bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
     static bool     is_pressed[UINT8_MAX];
@@ -52,8 +74,7 @@ bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
     const  uint16_t tap_keycode = QK_MOD_TAP_GET_TAP_KEYCODE(keycode);
 
     if (record->event.pressed) {
-        // Press the tap keycode if the tap-hold key follows the previous key swiftly
-        if (IS_HOMEROW_MOD_TAP(keycode) && IS_TYPING(prev_keycode)) {
+        if (SHOULD_BYPASS_MOD_TAP(keycode, prev_keycode)) {
             is_pressed[tap_keycode] = true;
             record->keycode = tap_keycode;
         }
