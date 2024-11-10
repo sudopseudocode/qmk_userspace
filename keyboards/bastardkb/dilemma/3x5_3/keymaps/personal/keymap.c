@@ -25,6 +25,20 @@ enum dilemma_keymap_layers {
 #    define SNIPING KC_NO
 #endif // !POINTING_DEVICE_ENABLE
 
+/* Permission Hold Per Key */
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // Turn off for these to elimate false positives
+        case KC_LGUI:
+        case KC_RGUI:
+        case KC_LALT:
+        case KC_RALT:
+            return false;
+        default:
+            return true;
+    }
+}
+
 // Automatically enable sniping-mode on the pointer layer.
 // #define DILEMMA_AUTO_SNIPING_ON_LAYER LAYER_POINTER
 
