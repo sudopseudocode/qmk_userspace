@@ -28,7 +28,7 @@ enum dilemma_keymap_layers {
 /* Permission Hold Per Key */
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // Turn off for these to elimate false positives
+        // Turn off for these to eliminate false positives
         case LGUI_T(KC_A):
         case LALT_T(KC_S):
         case LCTL_T(KC_D):
